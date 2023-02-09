@@ -51,4 +51,13 @@ io.on('connection', (socket) => {
       activeUsers: peers,
     })
   })
+
+  socket.on('preOffer', (data) => {
+    console.log('处理预呼叫')
+    const { callee, caller } = data
+    io.to(callee.socketId).emit('preOffer', {
+      callerUsername: caller.username,
+      callerSocketId: socket.id,
+    })
+  })
 })
